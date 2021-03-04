@@ -1,0 +1,28 @@
+---
+title: "R para Finanzas"
+---
+<br>
+<p>
+Profesor: Víctor Macías E.
+<br>
+E-mail: vmaciase@fen.uchile.cl
+</p>
+<br>
+
+
+<h2>Descripción del curso</h2>
+
+<p>
+Este curso presenta una introducción a R. Entre los tópicos a discutir se encuentran: importación y exportación de datos, manipulación de datos, visualización de datos, modelamiento y R Markdown para elaborar informes y presentaciones.
+</p>
+
+<h2>Programa del curso</h2>
+
+<h2>Evaluaciones</h2>
+
+<p>
+Se realizarán tres evaluaciones cuyo promedio tiene una ponderación de 50% de la nota final y otras dos evaluaciones comunes entre las distintas secciones del curso de 25% cada una.
+</p>
+
+
+

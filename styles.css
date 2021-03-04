@@ -1,0 +1,23 @@
+<style>
+
+div {
+  background-color: lightgrey;
+  width: 300px;
+  border: 15px blue;
+  padding: 50px;
+  margin: 20px;
+}
+
+p {
+  color: gray;
+  font-family: Helvetica, sans-serif;
+}
+
+p.groove {border-style: groove;}
+
+.p1 {
+  text-indent: 1em;
+}
+
+
+</style>
