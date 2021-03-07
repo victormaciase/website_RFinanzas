@@ -1,0 +1,285 @@
+---
+title: "Vectores, matrices, listas, dataframes y tibbles"
+author: "Víctor Macías E."
+output:
+  tufte::tufte_html: default
+---
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+```
+
+
+# Vectores
+
+Los tipos mas comunes de vectores son: `logical`, `double`, `integer` y `character`.
+
+
+## Lógicos
+
+Pueden tomar tres valores `TRUE`, `FALSE` y `NA`. Son usualmente construidos a partir de operaciones de comparación.
+
+```{r}
+a <- c(TRUE, FALSE, TRUE)
+
+typeof(a)
+```
+
+```{r}
+1:5 < 3
+```
+
+## Numéricos 
+
+Pueden ser `integer` o `double`. 
+
+```{r}
+typeof(c(1.23, 5, -1))  # double
+```
+
+```{r}
+typeof(c(1L, 5L, -1L))  # integer
+```
+
+Entre los valores especiales de vectores numéricos se encuentran: `NA`, `NaN`, `Inf` y `-Inf`
+
+Tipo | Significado | Ejemplo |
+|--- |---           |--- |
+| NaN  | Not a number  | 0/0
+| NA   | Not available | Representa datos faltantes
+| Inf  | infinite      | 5/0, 100000ˆ100000
+| -Inf  | Negative infinite      | -5/0, -100000ˆ100000
+
+```{r}
+0/0
+5/0
+-5/0
+100000^100000
+-100000^100000
+```
+
+```{r}
+typeof(NaN)
+typeof(NA)
+typeof(NA_integer_)
+typeof(NA_real_)
+typeof(Inf)
+```
+
+## Character 
+
+Cada elemento de este tipo de vectores es un string.
+
+```{r}
+typeof(c("Andrea", "Javier", "Patricia"))
+typeof(NA_character_)
+```
+
+
+
+- Para convertir un tipo de vector a otro usa: (i) coerción explícita usando `as.logical()`, `as.integer()`, `as.double()` o `as.character()` , o bien, (ii) coerción implícita
+
+```{r}
+as.character(c(1, -4, 0))  # coerción explícita
+```
+
+```{r}
+as.numeric(c(TRUE, FALSE))  # coerción explícita
+```
+
+```{r}
+sum(1:5 < 3)  # coerción implícita
+```
+
+
+
+- Cuando se combinan en un vector elementos de diferentes tipos, el tipo más complejo domina. 
+
+
+```{r}
+typeof(c("hola", 10, 0))
+```
+
+```{r}
+typeof(c(10L, 5))
+```
+
+```{r}
+typeof(c(TRUE, 5))
+```
+
+Si debe incluir distintos tipos en el mismo vector, se debería crear una lista.
+
+
+# Listas 
+
+Listas, también denominadas vectores recursivos, son más complejas que los vectores vistos anteriormente. Pueden contener otras listas e incluir elementos de diferente tipo.
+
+```{r}
+a <- list("hola", FALSE, 6.3, 5L)
+str(a)
+```
+
+
+```{r}
+b <- list(x = list("hola", TRUE, 1.7), y = c(6.3, 5L))
+str(b)
+
+```
+
+
+# Tibble/data.frame
+
+Tibbles son una versión moderna de data frames que solucionan algunos de los problemas que presentan estos últimos como, por ejemplo, tibbles no convierten strings a factores.
+
+Algunas funciones más antiguas no operan con tibbles, por lo que si encuentran una de estas funciones, se debe convertir  el tibble a data.frame usando `as.data.frame()`.
+
+Para más información, se recomienda revisar: `vignette("tibble")`
+
+A continuación se presentan como ejemplo el conjunto de datos `anscombe` como un `data.frame`:
+
+```{r}
+anscombe
+```
+
+y también como `tibble`:
+
+```{r}
+tibble::as_tibble(anscombe)
+```
+
+# Operadores aritméticos
+
+Operador | Operación
+--- |--- 
+`+`   | Adición
+`-`   | Substracción
+`*`   | Multiplicación
+`/`   | División
+`^` o `**` | Exponenciación
+`%%` | Módulo entrega el residuo de una división
+`%/%` | Entrega parte entera del cuociente de una división
+
+Notas:
+
+- El orden de las operaciones es paréntesis, exponenciación, multiplicación, división, adición y substracción
+(PEMDAS)
+
+- A continuación se presentan algunos ejemplos de operaciones aritméticas:
+
+```{r}
+4+5*6/10
+```
+
+
+```{r}
+10 %% 3
+```
+
+```{r}
+10%/%3
+```
+
+
+```{r}
+1:6 + 2
+```
+
+```{r}
+1:6 + 2:3
+c(1,2,3,4,5,6) + c(2,3,2,3,2,3)
+```
+
+# Operadores relacionales
+
+Operador | Descripción
+--- |--- 
+`<`   | menor a
+`>`   | mayor a
+`<=`   | menor o igual a
+`>=`   | mayor o igual a
+`==` | igual a
+`!=` | no igual a 
+
+# Operadores lógicos
+
+Operador | Descripción
+--- |--- 
+`!x` | no x
+`|` | o
+`&` | y
+
+
+Notas:
+
+- El operador & sólo retorna TRUE si ambos valores lógicos son TRUE
+
+```{r}
+TRUE & TRUE
+```
+
+```{r}
+TRUE & FALSE
+```
+
+```{r}
+FALSE & TRUE
+```
+
+
+```{r}
+FALSE & FALSE
+```
+
+
+- El operador | sólo retorna FALSE si ambos valores lógicos son FALSE
+
+```{r}
+TRUE | TRUE
+```
+
+```{r}
+TRUE | FALSE
+```
+
+```{r}
+FALSE | TRUE
+```
+
+
+```{r}
+FALSE | FALSE
+```
+
+# Operadores con vectores
+
+|Función        | Descripción                                             |
+|:------------- |:------------------------------------------------------  |
+|`length(x)`    | Determina el número de elementos del vector $x$  |
+|`sum(x)`       | Suma elementos del vector $x$  |
+|`prod(x)`      | Multiplica elementos del vector $x$  |
+|`sort(x)`      | Ordena elementos del vector $x$ en orden creciente por defecto  |
+|`order(x)`     | Entrega el índice de los elementos del vector ordenados de menor a mayor  |
+|`which.min(x)` | Entrega la posición del elemento con el valor mínimo  |
+|`which.max(x)` | Entrega la posición del elemento con el valor máximo  |
+|`min(x)`       | Determina el mínimo valor del vector $x$  |
+|`max(x)`       | Determina el máximo valor del vector $x$  |
+
+
+# Operadores con matrices
+
+Operador | Descripción
+:--- |:--- 
+`diag(A)` | Captura elementos de la diagonal principal de A
+`t(A)` | Calcula la traspuesta de la matriz A
+`solve(A)` | Calcula inversa de la matriz A
+`A + B` | Suma de matrices A y B
+`A %*% B` | Multiplicación de matrices A y B
+`A*B` | Multiplica elemento (i, j) de A y B, respectivamente
+`rowSums(A)` | Suma elementos de cada fila de A
+`colSums(A)` | Suma elementos de cada columna de A
+`det(A)` | Determinante de A
+
