@@ -7,13 +7,13 @@ navbar:
         - text: Instalación de R
           href: tutoriales/installR.html
         - text: Tibbles y algo más
-          href: tutoriales/TibblesYMas.html  
+          href: tutoriales/TibblesYMas.html
+        - text: R Markdown
+          href: tutoriales/IntroRMarkdown.html 
     - text: Guías de Ejercicios
       menu: 
         - text: Guía 1
-          href: guia1.html
-        - text: Guía 2
-          href: guia2.html
+          href: Guias/Guia1.pdf
     - text: Recursos
       href: Recursos.html
 output: 
