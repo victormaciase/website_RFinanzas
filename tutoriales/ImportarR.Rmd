@@ -135,12 +135,12 @@ read_sas | SAS
 
 Este paquete se utiliza para manipulación de datos, pero también para importar datos, especialmente archivos muy grandes. Uno de sus atractivos más importantes es su gran rapidez. Para una descripción detallada, se recomienda ir al siguiente link <https://cran.r-project.org/web/packages/data.table/data.table.pdf>
 
-```{r}
+```{r echo=FALSE, eval = FALSE}
 library(data.table)
 library(DT)
 ```
 
-```{r}
+```{r echo=FALSE, eval = FALSE}
 DT = data.table(
   region = c("A","A","A","B","B","C","C","C","C","D"),
   var1 = 1:10,
@@ -168,3 +168,14 @@ Estos datos pueden ser importados a R, usando varios paquetes, según se detalla
 
 Para bajar estos datos usaremos el paquete WDI.
 
+# *API* (Application Programming Interface):
+
+En sentido general, un API es una pieza de software constituida por diferentes protocolos que permite la comunicación a través de Internet entre diferentes aplicaciones de la red. Cada API tiene sus propias reglas que definen las características que debe tener la solicitud de información, así como la respuesta.
+
+Mientras el uso de algunas *APIs* permiten el acceso de cualquier persona, como es el caso del API de GitHub, otras requieren el uso de ciertas credenciales (*keys*) para acceder a los datos. En este último grupo, se encuentra el API de Twitter. 
+
+El paquete de R que permite realizar dicha comunicación entre aplicaciones es `httr` que se recomienda revisar en <https://cran.r-project.org/web/packages/httr/>.
+
+# Paquete *"tidyquant"*:
+
+Este es uno de los paquetes más usados en el modelamiento de series de tiempo financieras. Para una descripción detallada se recomienda revisar la siguiente página: <https://cran.r-project.org/web/packages/tidyquant/tidyquant.pdf>

@@ -1,0 +1,139 @@
+---
+output:
+  pdf_document: default
+geometry: margin=1.2in
+---
+
+\begin{center}
+			\includegraphics[width=1.3cm]{logo.jpg}\\
+			\LARGE{\textbf{R para Finanzas}}\\
+			\textbf{Guía de Ejercicios 1}\\
+			\vspace{0.2cm}
+			\textit{Vectores, matrices, listas y data frames}
+\end{center}
+\vspace{1cm}
+\begin{flushright}
+  \textbf{Profesor}: \textit{Víctor Macías E.}  
+\end{flushright}
+
+
+\vspace{0.5cm}
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE, eval = FALSE)
+```
+
+
+# Pregunta 1
+
+(a) Genere un vector que contenga la siguiente secuencia de números: ${1,2,3,...,10}$
+
+```{r }
+seq(1,10,1) #forma 1 
+1:10  #forma 2
+seq(10) #forma 3
+c(1,2,3,4,5,6,7,8,9,10)  #forma 4
+```
+
+(b) Asigne el vector creado a $x$, determine su tipo y dimensión.
+
+```{r}
+x <- seq(1, 10, 1)
+
+typeof(x)
+length(x)
+```
+
+(c) Calcule la suma y el producto de los elementos del vector $x$
+
+```{r}
+sum(x)
+prod(x)
+```
+
+(d) Calcule la suma acumulada y el producto acumulado de los elementos del vector $x$
+
+```{r}
+cumsum(x)
+cumprod(x)
+```
+
+
+(e) Construya un vector lógico a partir de los elementos del vector $x$ que son divisibles por 2 ¿Cuántos números son divisibles por 2? ¿Cuáles son divisibles por 2?
+
+```{r}
+y <- x %% 2 == 0
+```
+
+
+```{r}
+sum(x %% 2 == 0)
+```
+
+
+```{r}
+x[x %% 2 == 0]
+```
+
+
+(f) Genere el siguiente vector: "mes_1", "mes_2",..., "mes_10" 
+
+```{r }
+paste0("mes_", x)
+```
+
+\vspace{0.5cm}
+
+# Pregunta 3
+
+La siguiente tabla contiene las edades de 5 estudiantes:
+
+Nombre | Edad
+--- |---
+Pedro | 17
+Ana | NA
+Maya | 23
+Max | NA
+Paula | 20
+
+
+(a) A partir de esta tabla genere un vector $x$ con las edades de los estudiantes. Los nombres de cada uno de los elementos del vector deben ser los nombres de los estudiantes.
+
+```{r}
+x = c("Pedro"=17, "Ana"=NA, "Maya"=23, "Max"=NA, "Paula"=20)
+```
+
+
+(d) Calcule la media aritmética de las edades de los 5 estudiantes usando la función `mean` y la fórmula para el cálculo de la media aritmética:
+
+$$\overline x= \frac{\sum_{i=1}^n x_i}{n}$$
+
+```{r }
+mean(x) # ¿Qué obtiene?
+
+```
+
+```{r }
+mean(x, na.rm = TRUE) #forma 1
+```
+
+```{r }
+sum(x[!is.na(x)])/length(x[!is.na(x)]) #forma 2
+```
+
+(e) Calcule la desviación estándar de las edades de los 5 estudiantes usando la función `sd` y la fórmula para el cálculo de la desviación estándar:
+
+$$s= \sqrt{\frac{\sum_{i=1}^n (x_i-\overline x)^2}{n - 1}}$$
+
+
+```{r }
+sd(x, na.rm = TRUE)  # Forma 1
+
+sqrt(sum((x[!is.na(x)]-mean(x, na.rm = TRUE))^2)/(length(x[!is.na(x)]) - 1))   # Forma 2
+
+sqrt(sum((na.omit(x)-mean(x, na.rm = TRUE))^2)/(length(na.omit(x)) - 1))     # Forma 3
+```
+
+

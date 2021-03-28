@@ -9,11 +9,17 @@ navbar:
         - text: Tibbles y algo más
           href: tutoriales/TibblesYMas.html
         - text: R Markdown
-          href: tutoriales/IntroRMarkdown.html 
+          href: tutoriales/IntroRMarkdown.html
+        - text: Importar datos a R
+          href: tutoriales/ImportarR.html
+        - text: Introducción a dplyr y tidyr
+          href: tutoriales/Intro_dplyr.html
     - text: Guías de Ejercicios
       menu: 
         - text: Guía 1
           href: Guias/Guia1.pdf
+        - text: Guía 2
+          href: Guias/Guia2.pdf
     - text: Recursos
       href: Recursos.html
 output: 

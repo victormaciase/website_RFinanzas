@@ -1,0 +1,152 @@
+---
+header-includes: \usepackage{fontawesome}
+output:
+  pdf_document: default
+---
+
+
+\begin{center}
+			\includegraphics[width=1.4cm]{logo.jpg}\\
+			\vspace{0.5cm}
+			\LARGE{\textbf{R para finanzas}}\\
+			\textbf{Guía de Ejercicios 2}\\
+			\vspace{0.2cm}
+      \textit{Importación de datos}\\
+\end{center}
+
+\vspace{1cm}
+\begin{flushright}
+  \textbf{Profesor}: \textit{Víctor Macías E.}  
+\end{flushright}
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	fig.height = 4,
+	fig.width = 8,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+
+# Pregunta 1
+
+Importe los datos del archivo *capm.xls*
+
+```{r}
+rm(list = ls())
+library(readxl)
+
+capm <- read_excel("datos/capm.xls")
+
+```
+
+
+# Pregunta 2
+
+Obtenga datos del precio de la acción de Amazon para el período 01/02/2018 hasta el 25/03/2021 desde Yahoo! Finance. Además, calcule el retorno diario de la acción usando la siguiente fórmula:
+
+$$r_t=log(p_t)-log(p_{t-1})$$
+
+```{r }
+library(readr)
+library(dplyr)
+
+AMZN <- read_csv("datos/AMZN.csv")
+```
+
+```{r }
+AMZN <- AMZN %>% mutate(retorno_log = log(Close) - log(lag(Close)),
+                        retorno_arit = (Close - lag(Close))/lag(Close))
+```
+
+
+# Pregunta 3
+
+Obtenga datos del precio de la acción de Facebook para el período 02/01/2018 hasta el 25/03/2021 desde Yahoo! Finance. Además, calcule el retorno diario de la acción, usando la siguiente fórmula:
+
+$$r_t=\frac{P_{t}-P_{t-1}}{P_{t-1}}$$
+
+```{r }
+library(tidyquant)
+
+fb <- tq_get("FB", get = "stock.prices", from = "2018-01-02", to = "2021-03-26") 
+```
+
+```{r}
+fb_tq <- fb %>% tq_transmute(select     = adjusted,
+                           mutate_fun = periodReturn,
+                           period     = "daily", 
+                           type       = "arithmetic",
+                           col_rename = "retorno_arit")
+
+fb <- fb %>% left_join(fb_tq, by = "date")
+```
+
+```{r}
+fb <- fb %>% mutate(retorno_diario = (adjusted - lag(adjusted))/lag(adjusted))
+```
+
+
+# Pregunta 4
+
+Obtenga datos del precio del bitcoin para el período 02/01/2018 hasta el 25/03/2021 desde la página web de la Federal Reserve Bank of St. Louis (FRED) (<https://fred.stlouisfed.org/series/CBBTCUSD>)
+
+```{r}
+bitcoin <- tq_get("CBBTCUSD", get = "economic.data", from = "2016-01-01", to = "2021-03-25")
+```
+
+
+# Pregunta 5
+
+Usando el paquete *WDI*, obtenga datos de población, PIB per cápita ajustado por paridad de poder de compra, crédito interno al sector privado otorgado por los bancos (% del PIB) y número de ATMs por $100.000$ adultos para todos los países incluidos en la base de datos en el período 1960-2020.
+
+```{r }
+# Población - SP.POP.TOTL
+# PIB per cápita - NY.GDP.PCAP.PP.CD
+# Domestic credit to private sector by banks (% of GDP) (FD.AST.PRVT.GD.ZS)
+# Automated teller machines (ATMs) (per 100,000 adults) (FB.ATM.TOTL.P5)
+
+library(WDI)
+
+wbData <- WDI(indicator=c("SP.POP.TOTL", 
+                         "NY.GDP.PCAP.PP.CD", 
+                         "FD.AST.PRVT.GD.ZS", 
+                         "FB.ATM.TOTL.P5"), 
+             country="all", extra = TRUE, start=1960, end=2020)
+
+saveRDS(wbData, "datos/wbData_FIN1960_2020.rds")
+```
+
+
+
+
+```{r echo=FALSE, eval=FALSE}
+rm(list = ls())
+library(readxl)
+library(dplyr)
+library(lubridate)
+
+capm <- read_excel("/cloud/project/datos/capm.xls")
+
+glimpse(capm)
+
+capm <- capm %>% mutate(rsandp = 100*(log(SANDP)- log(lag(SANDP))),
+                        rford = 100*(log(FORD)- log(lag(FORD))),
+                        ustb3m = USTB3M/12,
+                        rsandp_f = rsandp - ustb3m,
+                        rford_f = rford - ustb3m) 
+
+#capm_2007 <- capm %>% filter(Date <= as.POSIXct('2007-04-01'))
+
+model1 <-lm(rford ~ rsandp, data = capm)
+summary(model1)
+
+model2 <-lm(rford_f ~ rsandp_f, data = capm)
+summary(model2)
+
+```

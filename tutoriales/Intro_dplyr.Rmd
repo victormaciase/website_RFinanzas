@@ -1,5 +1,5 @@
 ---
-title: "Introducción a dplyr"
+title: "Introducción a dplyr y tidyr"
 author: "Víctor Macías E."
 output:
   tufte::tufte_html: default
@@ -129,16 +129,16 @@ tb %>% group_by(id_hogar) %>% count()
 
 Un conjunto de datos es *tidy*^[Ver Wickham, H. 2014. Tidy data. Journal of Statistical Software. Vol.59, issue 10 <http://www.jstatsoft.org/v59/i10/paper>.] si:
 
-1. Cada variable debe tener sus propia columna
-2. Cada observación debe tener su propia fila
-3. Cada valor debe tener su propia celda
+1. Cada variable tiene su propia columna
+2. Cada observación tiene su propia fila
+3. Cada valor tiene su propia celda
 
 ![](tidy_data.png)
 
 
 Disponer los datos de esta forma facilita el trabajo con éstos, ya que estandariza la organización de los datos.
 
-Para estructurar los datos de esta forma, se pueden usar una serie de funciones disponibles en el paquete `tidyr` que al igual que `dplyr` es parte de *tidyverse*. 
+Para estructurar los datos de esta forma, se pueden usar una serie de funciones disponibles en el paquete `tidyr`^[Para una revisión más detallada se recomienda revisar las *vignettes* incluidas en la página <https://cran.r-project.org/web/packages/tidyr/>.] que al igual que `dplyr` es parte de *tidyverse*. 
 
 El primer paso de esta etapa es identificar las variables y observaciones. Luego, es importante ver si se tiene alguno de los siguientes problemas:
 
@@ -224,9 +224,9 @@ zona %>% unite(new, num_casos, total, sep = "/")
 ```
 
 
-# Combinando múltiples tablas de datos
+# Combinando múltiples conjuntos de datos
 
-Suponga que dispone de dos conjuntos de datos *data1* y *data2*, los cuales se combinarán usando la variable *id* que se denomina *key* y puede ser una o varias variables que identifican una observación y que se usan para conectar los datos de ambas tablas.
+Suponga que dispone de dos conjuntos de datos *data1* y *data2*, los cuales se combinarán usando la variable *id* que se denomina *key* y puede ser una o varias variables que identifican una observación y que se usan para conectar los datos.
 
 ```{r}
 data1 <- tibble(
@@ -304,23 +304,31 @@ Elimina las observaciones en *data1* que tienen un match en *data2*
 data1 %>% anti_join(data2, by = "id")
 ```
 
+Si se quieren combinar verticalmente dos conjuntos de datos, se puede usar `bind_rows` que realiza  el match entre columnas por nombre y si hay columnas faltantes se completarán con `NA`.
+
 ## bind_rows
 
 ```{r}
-data_1 <- tibble::tibble(var1 = c(12,4,5), 
-                var2 = c("a", "b", "a"))
+data_1 <- tibble::tibble(
+  id = 1,
+  var1 = c(12,4,5), 
+  var2 = c("a", "b", "a"),
+  var3 = c(1, 0, 0))
 data_1
 ```
 
 ```{r}
-data_2 <- tibble::tibble(var1 = c(1,6,9,14), 
-                var2 = c("b", "b", "a", "b"))
+data_2 <- tibble::tibble(
+  id = 2,
+  var1 = c(1,6,9,14), 
+  var2 = c("b", "b", "a", "b"))
 data_2
 ```
 
 ```{r}
-data_tot <- dplyr::bind_rows(data_1, data_2)
+data_tot <- bind_rows(data_1, data_2, .id = "id")
 data_tot
 ```
 
+Para combinar las columnas de dos conjuntos de datos por posición, se recomienda revisar `bind_cols`.
 

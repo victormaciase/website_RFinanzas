@@ -1,0 +1,53 @@
+---
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+---
+
+\begin{center}
+			\includegraphics[width=1.3cm]{logo.jpg}\\
+			\LARGE{\textbf{R para Finanzas}}\\
+			\textbf{Guía de Ejercicios 1}\\
+			\vspace{0.2cm}
+			\textit{Vectores, matrices, listas y data frames}
+\end{center}
+\vspace{1cm}
+\begin{flushright}
+  \textbf{Profesor}: \textit{Víctor Macías E.}  
+\end{flushright}
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción
+
+fsdfsef s rwrw
+ 
+ 
+
+# Metodología
+
+## Estadística descriptiva
+
+Calcularemos la media aritmética del vector x usando la siguiente fórmula:
+
+$$\overline x=\frac{\sum_{i=1}^nx_i}{n}$$
+
+```{r}
+x = c(10,5,19)
+```
+
+La media es:
+
+```{r}
+mean(x)
+```
+
+## Modelo
+
+El modelo a estimar:
+
+$$y_i=\beta_0+ \beta_1x_i+u_i$$
